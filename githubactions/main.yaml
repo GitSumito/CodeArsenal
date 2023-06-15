@@ -1,0 +1,28 @@
+name: AWS S3 List
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  list-s3:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: arn:aws:iam::123456789012:role/github-actions-role
+        role-session-name: GitHubActions-session
+        role-duration-seconds: 3600
+        aws-region: ap-northeast-1
+        mask-aws-account-id: false
+
+    - name: List S3 buckets
+      run: aws s3 ls
+
