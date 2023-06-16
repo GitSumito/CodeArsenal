@@ -37,6 +37,7 @@ response = client.start_query(
 
 query_id = response['queryId']
 
+
 # クエリ結果を取得するまで待機
 while True:
     response = client.get_query_results(
@@ -49,11 +50,13 @@ while True:
 
     time.sleep(1)
 
-# 結果をCSVファイルに書き込む
-with open('query_results.csv', 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile)
-    writer.writerow([field['field'] for field in results[0]])  # ヘッダ行
+# 結果が存在する場合のみ、CSVファイルに書き込む
+if results:
+    with open('query_results.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow([field['field'] for field in results[0]])  # ヘッダ行
 
-    for row in results:
-        writer.writerow([field['value'] for field in row])
-
+        for row in results:
+            writer.writerow([field['value'] for field in row])
+else:
+    print("No results found")

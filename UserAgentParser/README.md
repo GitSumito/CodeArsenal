@@ -13,37 +13,48 @@ This script fetches logs from AWS CloudWatch Logs Insights, executes a specific 
 
 ## Setup and Installation
 
-1. Clone the repository:
+1. Install the required dependencies:
 
-    ```sh
-    git clone <repository_url>
-    cd <repository_directory>
-    ```
+   ```sh
+   pip install boto3 user_agents
+   ```
 
-2. Install the required dependencies:
+2. Set environment variables for the AWS region and log group you want to query:
 
-    ```sh
-    pip install boto3
-    ```
-
-3. Set up AWS CLI with the appropriate credentials and profile. You can follow the [official AWS CLI Configuration guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html).
-
-4. Set environment variables for the AWS region and log group you want to query:
-
-    ```sh
-    export AWS_REGION_NAME='us-west-2'
-    export AWS_LOG_GROUP_NAME='/aws/lambda/my-lambda-function'
-    ```
+   ```sh
+   export AWS_REGION_NAME='ap-northeast-1'
+   export AWS_LOG_GROUP_NAME='/aws/lambda/my-lambda-function'
+   ```
 
 ## Usage
 
 Run the script by specifying the AWS profile as a command line argument:
 
 ```sh
-python your_script.py --profile YOUR_AWS_PROFILE_NAME
+# download
+python3 UserAgentDownloader.py --profile your-aws-profile
+# parse
+python3 UserAgentParser.py
+
 ```
 
 The script will execute a query on AWS CloudWatch Logs Insights, and write the results into a CSV file named `query_results.csv` in the current directory.
+
+## results
+
+```
+head parsed_logs.csv
+Device,OS Version,Browser,Browser Version,Count
+PC,Windows 10,Edge,114.0.1823,92
+PC,Windows 10,Chrome,114.0.0,112
+Mobile,iOS 15.6,Mobile Safari,15.6,8
+Mobile,iOS 16.5,Mobile Safari,16.5,9
+PC,Windows 10,Chrome,109.0.0,1
+PC,Other ,PostmanRuntime,7.26.5,2
+Mobile,iOS 16.5,Chrome Mobile iOS,114.0.5735,1
+Mobile,iOS 16.2,Google,267.0.537056344,8
+PC,Windows 8,Chrome,89.0.4389,1
+```
 
 ## Script Details
 

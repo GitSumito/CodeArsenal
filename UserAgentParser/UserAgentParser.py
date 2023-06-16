@@ -11,7 +11,7 @@ with open('query_results.csv', 'r') as file:
     # 各ログエントリを処理
     for log in logs:
         user_agent = log['user_agent']
-        count = log['count']
+        count = log['count(*)']
 
         # user_agents ライブラリでユーザーエージェント文字列を解析
         ua = parse(user_agent)
