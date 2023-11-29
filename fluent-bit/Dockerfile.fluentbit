@@ -1,0 +1,10 @@
+FROM public.ecr.aws/aws-observability/aws-for-fluent-bit:2.21.3
+
+COPY application.conf /fluent-bit/etc/application.conf
+COPY parser.conf /fluent-bit/etc/parser.conf 
+COPY stream-processor.conf /fluent-bit/etc/stream-processor.conf
+COPY parsers_custom.conf /fluent-bit/etc/parsers_custom.conf
+COPY extract_message.lua /fluent-bit/etc/extract_message.lua
+COPY run.sh /run.sh
+
+RUN yum install vim -y
